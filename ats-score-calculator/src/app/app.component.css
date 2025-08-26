@@ -1,0 +1,46 @@
+/* Spinner loader animation */
+.loader {
+    border-top-color: #4f46e5; /* Indigo-600 */
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
+  /* Smaller loader for button */
+.loader {
+    border-top-color: white;
+    animation: spin 1s linear infinite;
+  }
+  
+  .confetti-container {
+    pointer-events: none;
+    overflow: visible;
+  }
+  
+  .confetti-piece {
+    position: absolute;
+    width: 8px;
+    height: 16px;
+    background-color: #f59e0b; /* amber-500 */
+    opacity: 0.9;
+    transform-origin: center;
+    animation-name: confetti-fall;
+    animation-timing-function: ease-out;
+    animation-iteration-count: 1;
+  }
+  
+  @keyframes confetti-fall {
+    0% {
+      transform: translateY(0) rotate(0deg);
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(300px) rotate(360deg);
+      opacity: 0;
+    }
+  }
+  

@@ -1,0 +1,76 @@
+<main class="min-h-screen bg-gradient-to-b from-white to-gray-100 flex flex-col items-center justify-center px-4 py-10 animate-fadeInSlow">
+  <div class="text-center mb-10">
+    <h1 class="text-4xl md:text-5xl font-extrabold text-gray-800 mb-2 animate-slideInDown">ATS Score Finder</h1>
+    <p class="text-gray-500 text-lg animate-fadeIn">Upload your resume and paste the job description to see your match score.</p>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-6xl bg-white shadow-xl rounded-xl p-8 animate-slideInUp">
+    
+    <!-- Job Description Input -->
+    <div class="flex flex-col">
+      <label for="jobDesc" class="text-gray-700 font-semibold mb-2">Job Description</label>
+      <textarea
+        id="jobDesc"
+        [(ngModel)]="jobDesc"
+        placeholder="Paste the job description here..."
+        class="p-4 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 h-64 resize-y"
+      ></textarea>
+    </div>
+
+    <!-- Resume File Upload -->
+    <div class="flex flex-col">
+      <label for="resumeFile" class="text-gray-700 font-semibold mb-2">Upload Resume (.pdf or .txt)</label>
+      <input
+        type="file"
+        id="resumeFile"
+        accept=".pdf,.txt"
+        (change)="onFileSelected($event)"
+        class="file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 border border-gray-300 p-2 rounded-md"
+      />
+
+      <div *ngIf="resume" class="mt-4 bg-gray-50 border border-gray-200 rounded p-4 text-sm text-gray-700 h-64 overflow-auto whitespace-pre-wrap shadow-inner animate-fadeIn">
+        <strong class="block mb-1 text-indigo-600">Resume Preview:</strong>
+        {{ resume }}
+      </div>
+    </div>
+  </div>
+
+  <!-- Score Button -->
+  <div class="relative mt-10 w-full max-w-xs mx-auto">
+    <button
+      (click)="onCalculate()"
+      [disabled]="loading || calculating"
+      class="w-full px-8 py-4 text-white bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 rounded-md text-lg font-semibold shadow-lg transition transform hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed animate-fadeIn"
+    >
+      Calculate ATS Score
+    </button>
+  
+    <!-- Loader inside button container -->
+    <div
+      *ngIf="calculating"
+      class="absolute inset-0 bg-indigo-600 bg-opacity-80 flex items-center justify-center rounded-md"
+    >
+      <div class="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 border-t-white h-8 w-8"></div>
+    </div>
+  </div>
+    <!-- Score Result -->
+    <div *ngIf="score !== null" class="mt-8 text-2xl font-bold text-indigo-700 animate-scorePop">
+      ATS Match Score: {{ score }}%
+    </div>
+</main>
+<div *ngIf="loading" class="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
+  <div class="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 border-t-indigo-600 h-20 w-20"></div>
+</div>
+<!-- Celebration Overlay -->
+<div
+  *ngIf="score !== null && score > 80"
+  class="fixed inset-0 flex flex-col items-center justify-center pointer-events-none z-50"
+>
+  <div class="text-6xl animate-bounce mb-4 select-none">
+    🎉🎊✨🎉🎊✨
+  </div>
+  <div
+    class="confetti-container fixed inset-0 pointer-events-none"
+    aria-hidden="true"
+  ></div>
+</div>
